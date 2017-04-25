@@ -6,29 +6,20 @@ var router  = express.Router();
 
 router.get('/scrape', function(req, res){
 
-  url = 'http://www.nasdaq.com/aspx/infoquotes.aspx?symbol=IXIC';
+  url = 'http://www.nasdaq.com/';
 
   request(url, function(error, response, html){
     if (!error) {
       var $ = cheerio.load(html);
       var json = { lastSale: "", netChange: "", percentChange: "" };
 
-      $('#IXIC_LastSale2').filter(function() {
+      $('#indexTable').filter(function() {
         var data = $(this);
-        lastSale = data.text();
-        json.lastSale = lastSale;
-      });
-
-      $('#IXIC_Chg1').filter(function() {
-        var data = $(this);
-        netChange = data.text();
-        json.netChange = netChange;
-      });
-
-      $('#IXIC_Per1').filter(function() {
-        var data = $(this);
-        percentChange = data.text();
-        json.percentChange = percentChange;
+        var lastSale = data.text()
+                           .match("((.*));")[1]
+                           .split(',');
+        console.log(parseFloat(lastSale[1].replace(/"/g, '')));
+        json.lastSale = lastSale[1].replace(/"/g, '');
       });
     }
 
