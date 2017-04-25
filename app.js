@@ -1,5 +1,6 @@
 var express  = require('express');
 var services = require('./app/routes/services.js')
+var db       = require('./app/db.js')
 var app      = express();
 
 app.use('/', services)
