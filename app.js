@@ -1,3 +1,5 @@
+global.__base = __dirname + '/';
+
 var express  = require('express');
 var services = require('./app/routes/services.js')
 var db       = require('./app/db.js')

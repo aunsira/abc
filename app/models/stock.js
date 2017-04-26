@@ -1,4 +1,4 @@
-var knex = require('../db.js');
+var knex = require(__base + 'app/db');
 
 class Stock {
   constructor() {

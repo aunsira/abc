@@ -3,10 +3,10 @@ var request = require('request');
 var fs      = require('fs');
 var cheerio = require('cheerio');
 
-var Stock = require('../models/stock');
-var HistoricalStock = require('../models/historical_stock');
+var Stock = require(__base + 'app/models/stock');
+var HistoricalStock = require(__base + 'app/models/historical_stock');
 
-var formatText = require('../../lib/format_text')
+var formatText = require(__base + 'lib/format_text')
 
 var router  = express.Router();
 
