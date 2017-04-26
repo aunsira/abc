@@ -2,8 +2,7 @@ exports.up = function(knex, Promise) {
   return Promise.all([
     knex.schema.createTableIfNotExists('stocks', function(table) {
       table.increments('id').primary();
-      table.string('name');
-      table.timestamps();
+      table.string('name').unique();
     }).then(() => {
       console.log("Created table `stocks`")
       return knex.schema.createTableIfNotExists('historical_stocks', function(table) {
