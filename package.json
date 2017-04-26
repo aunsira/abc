@@ -10,6 +10,7 @@
     "debug": "~2.6.3",
     "express": "~4.15.2",
     "gulp": "^3.9.1",
+    "http-status-codes": "latest",
     "knex": "^0.12.9",
     "mysql": "^2.13.0",
     "nodemon": "^1.11.0",

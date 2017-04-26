@@ -1,9 +1,9 @@
 global.__base = __dirname + '/';
 
-var express  = require('express');
-var api = require('./app/routes/api.js')
-var db       = require('./app/db.js')
-var app      = express();
+let express  = require('express');
+let api = require('./app/routes/api.js')
+let db       = require('./app/db.js')
+let app      = express();
 
 app.use('/', api)
 app.listen('3001');

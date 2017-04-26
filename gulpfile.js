@@ -3,13 +3,13 @@ global.__base = __dirname + '/';
 let gulp            = require('gulp');
 let gulpUtil        = require('gulp-util');
 let request         = require('request');
-var fs              = require('fs');
-var cheerio         = require('cheerio');
+let fs              = require('fs');
+let cheerio         = require('cheerio');
 
-var Stock           = require('./app/models/stock');
-var HistoricalStock = require('./app/models/historical_stock');
+let Stock           = require('./app/models/stock');
+let HistoricalStock = require('./app/models/historical_stock');
 
-var formatText      = require('./lib/format_text')
+let formatText      = require('./lib/format_text')
 
 gulp.task('scrape', () => {
 
@@ -18,25 +18,23 @@ gulp.task('scrape', () => {
   let scrape = () => {
     request(url, function(error, response, html){
       if (!error) {
-        var $ = cheerio.load(html);
-        var stock = { name: "", value: 0.0 };
+        let $ = cheerio.load(html);
+        let stock = { name: "", value: 0.0 };
 
         $('#indexTable').filter(function() {
-          var data = $(this);
-          var indexTable = formatText.extractIndexTable(data.text());
+          let data = $(this);
+          let indexTable = formatText.extractIndexTable(data.text());
 
           stock.name = formatText.matchesNasdaqIndex(indexTable);
           stock.value = formatText.matchesNasdaqValue(indexTable);
         });
       }
 
-      stockObj = new Stock();
-
-      stockObj.save(stock.name).then(stockModel => {
+      new Stock().save(stock.name).then(stockModel => {
         historicalObj = new HistoricalStock();
         historicalObj.save(stockModel[0].id, stock.value).then(() => {});
       });
     });
   }
-  setInterval(scrape, 60000);
+  setInterval(scrape, 1000);
 });
