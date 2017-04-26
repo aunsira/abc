@@ -10,31 +10,19 @@ var formatText = require('../../lib/format_text')
 
 var router  = express.Router();
 
-router.get('/scrape', function(req, res){
+router.get('/api/nasdaq_indexes', function(req, res){
 
-  url = 'http://www.nasdaq.com/';
+  let arrResponse = [];
 
-  request(url, function(error, response, html){
-    if (!error) {
-      var $ = cheerio.load(html);
-      var stock = { name: "", value: 0.0 };
-
-      $('#indexTable').filter(function() {
-        var data = $(this);
-        var indexTable = formatText.extractIndexTable(data.text());
-
-        stock.name = formatText.matchesNasdaqIndex(indexTable);
-        stock.value = formatText.matchesNasdaqValue(indexTable);
-      });
-    }
-
-    stockObj = new Stock();
-
-    stockObj.save(stock.name).then(stockModel => {
-      historicalObj = new HistoricalStock();
-      historicalObj.save(stockModel[0].id, stock.value).then(() => {});
+  new Stock().findByName('NASDAQ')
+    .then(rows => {
+      return new HistoricalStock().findByStockId(rows[0].id);
+    }).then((data) => {
+      arrResponse.push('NASDAQ', data);
+    }).then(() => {
+      res.json(arrResponse);
     });
-  });
+  ;
 });
 
 module.exports = router;
