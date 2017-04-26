@@ -13,7 +13,7 @@ let formatText = require(__base + 'lib/format_text')
 let router  = express.Router();
 
 router.get('/api/indexes', function(req, res){
-  let name     = req.query.name.toUpperCase();
+  let name     = req.query.name;
   let options = {
     from_time: req.query.from_time || 0,
     to_time: req.query.to_time || new Date()/1000
@@ -27,6 +27,7 @@ router.get('/api/indexes', function(req, res){
       'error' : validationResult
     });
   }
+  name = name.toUpperCase();
 
   let arrResponse = [];
 
@@ -48,7 +49,7 @@ router.get('/api/indexes', function(req, res){
 
 function validateQueryParams(name, options) {
   // Validate index name.
-  if (!name instanceof String) {
+  if (!name instanceof String || name === undefined) {
     return 'Invalid name: must be string value.';
   }
 
