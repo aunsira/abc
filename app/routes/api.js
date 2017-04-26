@@ -1,10 +1,11 @@
-let express = require('express');
-let request = require('request');
-let fs      = require('fs');
-let cheerio = require('cheerio');
+let express         = require('express');
+let request         = require('request');
+let fs              = require('fs');
+let cheerio         = require('cheerio');
 let httpStatusCodes = require('http-status-codes');
+let config          = require(__base + 'config/default')
 
-let Stock = require(__base + 'app/models/stock');
+let Stock           = require(__base + 'app/models/stock');
 let HistoricalStock = require(__base + 'app/models/historical_stock');
 
 let formatText = require(__base + 'lib/format_text')

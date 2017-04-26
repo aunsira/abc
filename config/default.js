@@ -7,5 +7,11 @@ module.exports = {
       password : '',
       database: 'abc'
     },
+  },
+  source : {
+    url: 'http://www.nasdaq.com/'
+  },
+  app : {
+    port : 3001
   }
 }

@@ -1,4 +1,4 @@
-let config    = require(__base + 'knexfile.js');
+let config    = require(__base + 'config/default');
 let env       = 'development';
 let knex      = require('knex')(config[env]);
 
