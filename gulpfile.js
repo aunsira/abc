@@ -36,5 +36,5 @@ gulp.task('scrape', () => {
       });
     });
   }
-  setInterval(scrape, 1000);
+  setInterval(scrape, 60000);
 });
