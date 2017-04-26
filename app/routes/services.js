@@ -6,6 +6,8 @@ var cheerio = require('cheerio');
 var Stock = require('../models/stock');
 var HistoricalStock = require('../models/historical_stock');
 
+var formatText = require('../../lib/format_text')
+
 var router  = express.Router();
 
 router.get('/scrape', function(req, res){
@@ -16,17 +18,13 @@ router.get('/scrape', function(req, res){
     if (!error) {
       var $ = cheerio.load(html);
       var stock = { name: "", value: 0.0 };
-      var historical_data = {};
 
-      result = $('#indexTable').filter(function() {
+      $('#indexTable').filter(function() {
         var data = $(this);
-        var formatted_data = data.text()
-                           .match("((.*));")[1]
-                           .split(',');
-        console.log(formatted_data[0].match(/"(.*?)"/)[0]);
-        console.log(parseFloat(formatted_data[1].replace(/"/g, '')));
-        stock.name = formatted_data[0].match(/"(.*?)"/)[0].replace(/"/g, '');
-        stock.value = parseFloat(formatted_data[1].replace(/"/g, ''))
+        var indexTable = formatText.extractIndexTable(data.text());
+
+        stock.name = formatText.matchesNasdaqIndex(indexTable);
+        stock.value = formatText.matchesNasdaqValue(indexTable);
       });
     }
 
