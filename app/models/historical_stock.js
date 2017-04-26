@@ -19,7 +19,7 @@ class HistoricalStock {
     return knex.insert({
                   stock_id: stock_id,
                   value: value,
-                  record_time: new Date().getTime(),
+                  record_time: new Date()/1000|0,
                 })
                .into(this.table);
   }
