@@ -1,11 +1,11 @@
 global.__base = __dirname + '/';
 
 var express  = require('express');
-var services = require('./app/routes/services.js')
+var api = require('./app/routes/api.js')
 var db       = require('./app/db.js')
 var app      = express();
 
-app.use('/', services)
+app.use('/', api)
 app.listen('3001');
 
 console.log('Server is just getting started.');
