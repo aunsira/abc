@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "./node_modules/.bin/nodemon app.js --ignore node_modules/"
+    "start": "./node_modules/.bin/nodemon app.js --ignore node_modules/",
+    "test": "mocha --recursive ./tests/"
   },
   "dependencies": {
     "cheerio": "latest",
@@ -15,5 +16,12 @@
     "mysql": "^2.13.0",
     "nodemon": "^1.11.0",
     "request": "latest"
+  },
+  "devDependencies": {
+    "leche": "^2.1.2",
+    "mocha": "^3.0.2",
+    "should": "^11.1.0",
+    "sinon": "^1.17.5",
+    "supertest": "^2.0.0"
   }
 }
