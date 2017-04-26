@@ -1,3 +1,5 @@
+global.__base = __dirname + '/';
+
 let gulp            = require('gulp');
 let gulpUtil        = require('gulp-util');
 let request         = require('request');
