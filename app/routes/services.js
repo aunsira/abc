@@ -4,6 +4,7 @@ var fs      = require('fs');
 var cheerio = require('cheerio');
 
 var Stock = require('../models/stock');
+var HistoricalStock = require('../models/historical_stock');
 
 var router  = express.Router();
 
@@ -14,23 +15,27 @@ router.get('/scrape', function(req, res){
   request(url, function(error, response, html){
     if (!error) {
       var $ = cheerio.load(html);
-      var json = { lastSale: "", netChange: "", percentChange: "" };
+      var stock = { name: "", value: 0.0 };
+      var historical_data = {};
 
-      $('#indexTable').filter(function() {
+      result = $('#indexTable').filter(function() {
         var data = $(this);
-        var lastSale = data.text()
+        var formatted_data = data.text()
                            .match("((.*));")[1]
                            .split(',');
-        console.log(parseFloat(lastSale[1].replace(/"/g, '')));
-        json.lastSale = lastSale[1].replace(/"/g, '');
+        console.log(formatted_data[0].match(/"(.*?)"/)[0]);
+        console.log(parseFloat(formatted_data[1].replace(/"/g, '')));
+        stock.name = formatted_data[0].match(/"(.*?)"/)[0].replace(/"/g, '');
+        stock.value = parseFloat(formatted_data[1].replace(/"/g, ''))
       });
     }
 
-    // fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
-    //   console.log("File successfully written! - Check your project directory for the output.json file");
-    // });
+    stockObj = new Stock();
 
-    res.send('Check your console!');
+    stockObj.save(stock.name).then(stockModel => {
+      historicalObj = new HistoricalStock();
+      historicalObj.save(stockModel[0].id, stock.value).then(() => {});
+    });
   });
 });
 
