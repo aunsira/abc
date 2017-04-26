@@ -2,6 +2,9 @@ var express = require('express');
 var request = require('request');
 var fs      = require('fs');
 var cheerio = require('cheerio');
+
+var Stock = require('../models/stock');
+
 var router  = express.Router();
 
 router.get('/scrape', function(req, res){
@@ -23,9 +26,9 @@ router.get('/scrape', function(req, res){
       });
     }
 
-    fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
-      console.log("File successfully written! - Check your project directory for the output.json file");
-    });
+    // fs.writeFile('output.json', JSON.stringify(json, null, 4), function(err){
+    //   console.log("File successfully written! - Check your project directory for the output.json file");
+    // });
 
     res.send('Check your console!');
   });
