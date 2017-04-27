@@ -29,15 +29,15 @@ router.get('/api/indexes', function(req, res){
   }
   name = name.toUpperCase();
 
-  let arrResponse = [];
+  let response = '';
 
   new Stock().findByName(name)
     .then(rows => {
       return new HistoricalStock().findByStockId(rows[0].id, options);
     }).then((data) => {
-      arrResponse.push(name, data);
+      response = {name, data}
     }).then(() => {
-      res.json(arrResponse);
+      res.json(response);
     }).catch((error) => {
       res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
       return res.json({

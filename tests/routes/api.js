@@ -49,7 +49,7 @@ describe('GET /api/indexes', function() {
       .end(function(err, res) {
         if (err) return done(err);
         res.body.should.not.eql('');
-        res.body[0].should.equal('NASDAQ');
+        res.body.name.should.containEql('NASDAQ');
         done();
       });
   });
