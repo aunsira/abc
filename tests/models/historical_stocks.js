@@ -9,7 +9,6 @@ describe('HistoricalStock', function() {
   describe('save', function() {
     it('save should try to insert', function(done) {
       new Stock().save('nasdaq').then(stock => {
-        // console.log(stock);
         new HistoricalStock().save(stock[0].id, 234.53).then((rows) => {
           rows.length.should.eql(1);
         });
