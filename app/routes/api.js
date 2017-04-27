@@ -29,15 +29,13 @@ router.get('/api/indexes', function(req, res){
   }
   name = name.toUpperCase();
 
-  let response = '';
-
   new Stock().findByName(name)
     .then(rows => {
       return new HistoricalStock().findByStockId(rows[0].id, options);
     }).then((data) => {
-      response = {name, data}
-    }).then(() => {
-      res.json(response);
+      return new ResponseObject(name, data);
+    }).then((responseObject) => {
+      res.json(responseObject);
     }).catch((error) => {
       res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
       return res.json({
@@ -58,6 +56,13 @@ function validateQueryParams(name, options) {
     if (options.from_time > options.to_time) {
       return 'Invalid time: from_time > to_time';
     }
+  }
+}
+
+class ResponseObject {
+  constructor(name, data) {
+    this.name = name || '';
+    this.data = data || [];
   }
 }
 
