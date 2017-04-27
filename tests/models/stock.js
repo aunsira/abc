@@ -1,8 +1,8 @@
 global.__base = __dirname + '/../../';
 let supertest = require('supertest');
-let should = require('should');
-let sinon = require('sinon');
-let Stock = require('../../app/models/stock');
+let should    = require('should');
+let sinon     = require('sinon');
+let Stock     = require('../../app/models/stock');
 
 describe('Stock', function() {
   let tableName = 'stocks';

@@ -1,7 +1,7 @@
 global.__base = __dirname + '/../../';
 let supertest = require('supertest');
-let should = require('should');
-let app = require('../../app.js').default;
+let should    = require('should');
+let app       = require('../../app.js').default;
 
 var server = supertest.agent("http://localhost:3001");
 

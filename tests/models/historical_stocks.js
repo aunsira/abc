@@ -1,8 +1,8 @@
-global.__base = __dirname + '/../../';
-let supertest = require('supertest');
-let should = require('should');
-let sinon = require('sinon');
-let Stock = require('../../app/models/stock');
+global.__base       = __dirname + '/../../';
+let supertest       = require('supertest');
+let should          = require('should');
+let sinon           = require('sinon');
+let Stock           = require('../../app/models/stock');
 let HistoricalStock = require('../../app/models/historical_stock');
 
 describe('HistoricalStock', function() {

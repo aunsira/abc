@@ -2,9 +2,9 @@ module.exports = {
   development: {
     client: 'mysql',
     connection: {
-      host : 'localhost',
-      user : 'root',
-      password : '',
+      host:     'localhost',
+      user:     'root',
+      password: '',
       database: 'abc'
     },
   },
@@ -12,7 +12,7 @@ module.exports = {
     url: 'http://www.nasdaq.com/'
   },
   app : {
-    port : 3001,
+    port:     3001,
     interval: 60000
   }
 }

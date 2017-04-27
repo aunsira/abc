@@ -13,10 +13,10 @@ let formatText = require(__base + 'lib/format_text')
 let router  = express.Router();
 
 router.get('/api/indexes', function(req, res){
-  let name     = req.query.name;
+  let name    = req.query.name;
   let options = {
     from_time: req.query.from_time || 0,
-    to_time: req.query.to_time || new Date()/1000
+    to_time:   req.query.to_time   || new Date()/1000
   };
 
   validationResult = validateQueryParams(name, options);
