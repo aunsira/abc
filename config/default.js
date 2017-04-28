@@ -12,7 +12,7 @@ module.exports = {
     url: 'http://www.nasdaq.com/'
   },
   app : {
-    port:     3001,
+    port:     process.env.PORT || 3001,
     interval: 60000
   }
 }

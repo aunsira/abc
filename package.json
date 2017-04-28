@@ -7,6 +7,7 @@
     "test": "mocha --recursive ./tests/"
   },
   "dependencies": {
+    "basic-auth": "^1.1.0",
     "cheerio": "latest",
     "debug": "~2.6.3",
     "express": "~4.15.2",

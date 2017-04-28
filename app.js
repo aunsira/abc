@@ -7,8 +7,10 @@ let config  = require('./config/default')
 let app     = express();
 
 app.use('/', api)
-app.listen(config.app.port);
 
-console.log('Server is just getting started.');
+app.listen(config.app.port, () => {
+  console.log(`Server is just getting started on port ${config.app.port}...`);
+});
+
 
 exports.module = app;

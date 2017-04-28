@@ -4,6 +4,7 @@ let fs              = require('fs');
 let cheerio         = require('cheerio');
 let httpStatusCodes = require('http-status-codes');
 let config          = require(__base + 'config/default')
+let basicAuth       = require('basic-auth')
 
 let Stock           = require(__base + 'app/models/stock');
 let HistoricalStock = require(__base + 'app/models/historical_stock');
@@ -12,7 +13,25 @@ let formatText = require(__base + 'lib/format_text')
 
 let router  = express.Router();
 
-router.get('/api/indexes', function(req, res){
+const HTTP_USER = process.env.HTTP_USER
+const HTTP_PASS = process.env.HTTP_PASS
+
+const auth = function (req, res, next) {
+  if (!HTTP_PASS) return next()
+  const credentials = basicAuth(req)
+  if (!credentials) {
+    res.setHeader('WWW-Authenticate', 'Basic realm="Invalid credentials."')
+    return res.status(401).end()
+  }
+  if (credentials.name !== HTTP_USER || credentials.pass !== HTTP_PASS) {
+    res.setHeader('WWW-Authenticate', 'Basic realm="User/Password is invalid."')
+    console.log('UnAuthenticate')
+    return res.status(400).end('Access denied')
+  }
+  return next()
+}
+
+router.get('/api/indexes', auth, (req, res) => {
   let name    = req.query.name;
   let options = {
     from_time: req.query.from_time || 0,
