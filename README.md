@@ -3,7 +3,7 @@ Abc
 
 A Service for periodically scraping http://www.nasdaq.com/, parse out the index value of the Nasdaq, and store the result in the database.
 
-Requires
+Requirements
 --------
 
 - MySQL
