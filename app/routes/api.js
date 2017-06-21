@@ -1,17 +1,17 @@
-let express         = require('express');
-let request         = require('request');
-let fs              = require('fs');
-let cheerio         = require('cheerio');
-let httpStatusCodes = require('http-status-codes');
+let express         = require('express')
+let request         = require('request')
+let fs              = require('fs')
+let cheerio         = require('cheerio')
+let httpStatusCodes = require('http-status-codes')
 let config          = require(__base + 'config/default')
 let basicAuth       = require('basic-auth')
 
-let Stock           = require(__base + 'app/models/stock');
-let HistoricalStock = require(__base + 'app/models/historical_stock');
+let Stock           = require(__base + 'app/models/stock')
+let HistoricalStock = require(__base + 'app/models/historical_stock')
 
-let formatText = require(__base + 'lib/format_text')
+let formatText      = require(__base + 'lib/format_text')
 
-let router  = express.Router();
+let router = express.Router()
 
 const HTTP_USER = process.env.HTTP_USER
 const HTTP_PASS = process.env.HTTP_PASS
@@ -32,57 +32,56 @@ const auth = function (req, res, next) {
 }
 
 router.get('/api/indexes', auth, (req, res) => {
-  let name    = req.query.name;
+  let name = req.query.name
   let options = {
     from_time: req.query.from_time || 0,
-    to_time:   req.query.to_time   || new Date()/1000
-  };
+    to_time: req.query.to_time || new Date() / 1000
+  }
 
-  validationResult = validateQueryParams(name, options);
+  let validationResult = validateQueryParams(name, options)
 
   if (validationResult) {
-    res.status(httpStatusCodes.BAD_REQUEST);
+    res.status(httpStatusCodes.BAD_REQUEST)
     return res.json({
-      'error' : validationResult
-    });
+      'error': validationResult
+    })
   }
-  name = name.toUpperCase();
+  name = name.toUpperCase()
 
   new Stock().findByName(name)
     .then(rows => {
-      return new HistoricalStock().findByStockId(rows[0].id, options);
+      return new HistoricalStock().findByStockId(rows[0].id, options)
     }).then((data) => {
-      return new ResponseObject(name, data);
+      return new ResponseObject(name, data)
     }).then((responseObject) => {
-      res.json(responseObject);
-    }).catch((error) => {
-      res.status(httpStatusCodes.INTERNAL_SERVER_ERROR);
+      res.json(responseObject)
+    }).catch(() => {
+      res.status(httpStatusCodes.INTERNAL_SERVER_ERROR)
       return res.json({
-        'error' : `Could not find stock name: ${name} on the server`
-      });
-    });
-  ;
-});
+        'error': `Could not find stock name: ${name} on the server`
+      })
+    })
+})
 
-function validateQueryParams(name, options) {
+function validateQueryParams (name, options) {
   // Validate index name.
-  if (!name instanceof String || name === undefined) {
-    return 'Invalid name: must be string value.';
+  if (name === undefined) {
+    return 'Invalid name: must be string value.'
   }
 
   // Validate time range
   if (options.from_time !== null && options.to_time !== null) {
     if (options.from_time > options.to_time) {
-      return 'Invalid time: from_time > to_time';
+      return 'Invalid time: from_time > to_time'
     }
   }
 }
 
 class ResponseObject {
-  constructor(name, data) {
-    this.name = name || '';
-    this.data = data || [];
+  constructor (name, data) {
+    this.name = name || ''
+    this.data = data || []
   }
 }
 
-module.exports = router;
+module.exports = router

@@ -1,29 +1,29 @@
-let knex = require(__base + 'app/db');
+let knex = require(__base + 'app/db')
 
 class Stock {
-  constructor() {
-    this.table = 'stocks';
+  constructor () {
+    this.table = 'stocks'
   }
 
-  findAll() {
-    return knex.select().from(this.table);
+  findAll () {
+    return knex.select().from(this.table)
   }
 
-  findByName(name) {
+  findByName (name) {
     return knex.select()
-               .from(this.table)
-               .where('name', '=', name);
+      .from(this.table)
+      .where('name', '=', name)
   }
 
-  save(stock) {
+  save (stock) {
     return knex.insert({ name: stock })
-               .into(this.table)
-               .catch(() => {
-                 return knex.select()
-                            .from(this.table)
-                            .where('name', '=', stock);
-               });
+      .into(this.table)
+      .catch(() => {
+        return knex.select()
+          .from(this.table)
+          .where('name', '=', stock)
+      })
   }
 }
 
-module.exports = Stock;
+module.exports = Stock
