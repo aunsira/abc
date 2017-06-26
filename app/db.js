@@ -1,7 +1,7 @@
-let config    = require(__base + 'config/default');
-let env       = 'development';
-let knex      = require('knex')(config[env]);
+let config = require(__base + 'config/default')
+let env = 'development'
+let knex = require('knex')(config[env])
 
-module.exports = knex;
+module.exports = knex
 
-knex.migrate.latest([config]);
+knex.migrate.latest([config])

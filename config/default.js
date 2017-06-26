@@ -6,12 +6,12 @@ module.exports = {
       user:     'root',
       password: '',
       database: 'abc'
-    },
+    }
   },
-  source : {
+  source: {
     url: 'http://www.nasdaq.com/'
   },
-  app : {
+  app: {
     port:     process.env.PORT || 3001,
     interval: 60000
   }
