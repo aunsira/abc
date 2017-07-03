@@ -15,7 +15,7 @@ describe('Stock', function () {
   describe('save', function () {
     it('save should try to insert', function (done) {
       new Stock().save('nasdaq').then(stock => {
-        stock[0].name.should.eql('NASDAQ')
+        stock[0].name.should.eql('nasdaq')
       })
       done()
     })
@@ -24,7 +24,7 @@ describe('Stock', function () {
   describe('findByName', function () {
     it('should select and fiter by name', function (done) {
       new Stock().findByName('nasdaq').then(stock => {
-        stock[0].name.should.eql('NASDAQ')
+        stock[0].name.should.eql('nasdaq')
       })
       done()
     })
